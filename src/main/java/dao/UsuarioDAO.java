@@ -18,6 +18,9 @@ public class UsuarioDAO {
 
     private PreparedStatement preparedStatement = null;
     private final String SELECT_FROM_USUARIOS = "SELECT * FROM usuarios";
+    private final String INSERT_INTO_USUARIOS = "INSERT INTO usuarios (nombre, apellido, direccion, telefono, username, password, rol_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private final String DELETE_FROM_USUARIOS = "DELETE FROM usuarios WHERE id = ?";
+    private final String UPDATE_USUARIOS = "UPDATE usuario SET id = ?, nombre = ?, apellido = ?, direccion = ?, telefono = ?, username = ?, password = ?";
 
     public List<Usuario> listarUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
@@ -42,15 +45,49 @@ public class UsuarioDAO {
         }
         return usuarios;
     }
-        public boolean guardarUsuario(Usuario usuario) {
+
+    public boolean guardarUsuarios(Usuario usuario) {
         try {
             preparedStatement = ConectionDB.obtenerConexion().prepareStatement(INSERT_INTO_USUARIOS);
-            preparedStatement.setString(1, usuario.getNombre();
-            preparedStatement.setString(2, libro.getTitulo());
-            preparedStatement.setString(3, libro.getAutor());
-            preparedStatement.setString(4, libro.getEditorial());
-            preparedStatement.setString(5, libro.getAnioPublicacion());
-            preparedStatement.setInt(6, libro.getCantidadDisponible());
+            preparedStatement.setString(1, usuario.getNombre());
+            preparedStatement.setString(2, usuario.getApellido());
+            preparedStatement.setString(3, usuario.getDireccion());
+            preparedStatement.setString(4, usuario.getTelefono());
+            preparedStatement.setString(5, usuario.getUsername());
+            preparedStatement.setString(6, usuario.getPassword());
+            preparedStatement.setInt(7, usuario.getIdRole());
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean eliminarUsuarios(int id) {
+        try {
+            preparedStatement = ConectionDB.obtenerConexion().prepareStatement(DELETE_FROM_USUARIOS);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }        
+
+    
+
+    public boolean actualizarUsuario(Usuario usuario) {
+        try {
+            preparedStatement = ConectionDB.obtenerConexion().prepareStatement(UPDATE_USUARIOS);
+            preparedStatement.setInt(1, usuario.getId());
+            preparedStatement.setString(2, usuario.getNombre());
+            preparedStatement.setString(3, usuario.getApellido());
+            preparedStatement.setString(4, usuario.getDireccion());
+            preparedStatement.setString(5, usuario.getTelefono());
+            preparedStatement.setString(6, usuario.getUsername());
+            preparedStatement.setString(7, usuario.getPassword());
             preparedStatement.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -59,3 +96,4 @@ public class UsuarioDAO {
         }
     }
 }
+

@@ -1,1 +1,11 @@
+dao\LibroDAO.class
 com\mycompany\proyectobiblioteca\ProyectoBiblioteca.class
+modelo\Role.class
+dao\RoleDAO.class
+dao\UsuarioDAO.class
+controller\LibroControlador.class
+modelo\Libro.class
+modelo\Prestamo.class
+conection\ConectionDB.class
+modelo\Usuario.class
+dao\PrestamoDAO.class
